@@ -1,5 +1,5 @@
 {
-    'name': 'Student Managemnt System',
+    'name': 'Student System',
     'version': '1.0',
     'author': 'Abel M',
     'description': 'School Managment System',
@@ -8,5 +8,9 @@
     'data':[
         'security/ir.model.access.csv',
         'views/student_views.xml',
+        'views/student_inherit_views.xml',
+        'views/menu_view.xml',
     ],
+    'installable': True,
+    'application': True,
 }
