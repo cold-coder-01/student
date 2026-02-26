@@ -9,6 +9,7 @@
         'security/ir.model.access.csv',
         'views/student_views.xml',
         'views/student_inherit_views.xml',
+        'views/partner_inherit_view.xml',
         'views/menu_view.xml',
     ],
     'installable': True,

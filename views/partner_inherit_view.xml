@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <record id="partner_form_student" model="ir.ui.view">
+         <field name="name">partner.form.student</field>
+         <field name="model">res.partner</field>
+         <field name="inherit_id" ref="base.view_partner_form"/>
+
+         <field name="arch"  type="xml">
+             <xpath expr="//field[@name='phone']" position="after">
+                 <field name="student_code"/>
+             </xpath>
+         </field>
+     </record>
+</odoo>
