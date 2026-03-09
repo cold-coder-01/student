@@ -1,17 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-     <record id="student_form_view" model="ir.ui.view">
+    <record id="student_tree_view" model="ir.ui.view">
+        <field name="name">student.tree</field>
+        <field name="model">student.student</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="student_code"/>
+                <field name="name"/>
+                <field name="course"/>
+                <field name="attendance"/>
+                <field name="marks"/>
+                <field name="gpa"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="student_form_view" model="ir.ui.view">
         <field name="name">student.form</field>
         <field name="model">student.student</field>
         <field name="arch" type="xml">
             <form>
-               <sheet>
-                  <group>
-                     <field name="name"/>
-                     <field name="age"/>
-                  </group>
-               </sheet>
+                <header>
+                    <button name="action_enroll" string="Enroll" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_graduate" string="Graduate" type="object" class="btn-primary" invisible="state != 'enrolled'"/>
+                    <button name="action_set_inactive" string="Set Inactive" type="object" invisible="state == 'inactive'"/>
+                    <button name="action_reset_to_draft" string="Reset to Draft" type="object" invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,enrolled,graduated,inactive"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="student_code" readonly="1"/>
+                            <field name="name"/>
+                            <field name="course"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="age"/>
+                            <field name="date_of_birth"/>
+                            <field name="enrollment_date"/>
+                            <field name="email"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Performance">
+                            <group>
+                                <field name="attendance"/>
+                                <field name="marks"/>
+                                <field name="gpa" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Guardian">
+                            <group>
+                                <field name="guardian_name"/>
+                                <field name="guardian_phone"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
             </form>
         </field>
-     </record>
+    </record>
+
+    <record id="student_search_view" model="ir.ui.view">
+        <field name="name">student.search</field>
+        <field name="model">student.student</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="student_code"/>
+                <field name="course"/>
+                <filter string="Enrolled" name="filter_enrolled" domain="[('state', '=', 'enrolled')]"/>
+                <filter string="Graduated" name="filter_graduated" domain="[('state', '=', 'graduated')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Course" name="group_course" context="{'group_by': 'course'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
 </odoo>
